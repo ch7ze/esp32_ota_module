@@ -2,7 +2,7 @@
 
 
 
-void setupOTA()
+void ota::setupOTA()
 {
 	// Set hostname for OTA
 	ArduinoOTA.setHostname(HOSTNAME);
@@ -45,7 +45,7 @@ void setupOTA()
 	ArduinoOTA.begin();
 }
 
-void startAutomaticOTA()
+void ota::startAutomaticOTA()
 {
 	xTaskCreatePinnedToCore(
 		[](void *pvParameters)

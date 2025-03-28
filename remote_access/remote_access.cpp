@@ -6,18 +6,18 @@
  ****************************************************************/
 
 // Implementierung der ConfigurableStreambuf-Klasse
-ConfigurableStreambuf::ConfigurableStreambuf() {
+ota::ConfigurableStreambuf::ConfigurableStreambuf() {
     // Initialisiere den Ausgabepuffer (put area)
     setp(buffer, buffer + bufferSize - 1);
 }
 
-int ConfigurableStreambuf::addOutputFunction(std::function<void(const char*, size_t)> outputFunction) {
+int ota::ConfigurableStreambuf::addOutputFunction(std::function<void(const char*, size_t)> outputFunction) {
     int id = nextId++;
     outputFunctions.push_back({id, outputFunction});
     return id;
 }
 
-bool ConfigurableStreambuf::removeOutputFunction(int id) {
+bool ota::ConfigurableStreambuf::removeOutputFunction(int id) {
     auto it = std::find_if(outputFunctions.begin(), outputFunctions.end(),
         [id](const OutputEntry& entry) { return entry.id == id; });
         
@@ -28,7 +28,7 @@ bool ConfigurableStreambuf::removeOutputFunction(int id) {
     return false;
 }
 
-ConfigurableStreambuf::int_type ConfigurableStreambuf::overflow(int_type c) {
+ota::ConfigurableStreambuf::int_type ota::ConfigurableStreambuf::overflow(int_type c) {
     if (c != traits_type::eof()) {
         *pptr() = traits_type::to_char_type(c);
         pbump(1);
@@ -37,7 +37,7 @@ ConfigurableStreambuf::int_type ConfigurableStreambuf::overflow(int_type c) {
     return c != traits_type::eof() ? traits_type::to_int_type(c) : traits_type::eof();
 }
 
-int ConfigurableStreambuf::sync() {
+int ota::ConfigurableStreambuf::sync() {
     size_t len = pptr() - pbase();
     
     if (len > 0) {
@@ -62,7 +62,7 @@ int ConfigurableStreambuf::sync() {
  ******************************************************************************************/
 
 
-AsyncTCPServer::AsyncTCPServer(uint16_t port) : _server(port), _port(port) 
+ ota::AsyncTCPServer::AsyncTCPServer(uint16_t port) : _server(port), _port(port) 
 {
     // Initialize mutex
     selectedStartOptionMutex = xSemaphoreCreateMutex();
@@ -81,7 +81,7 @@ AsyncTCPServer::AsyncTCPServer(uint16_t port) : _server(port), _port(port)
     };
 }
 
-void AsyncTCPServer::begin() {
+void ota::AsyncTCPServer::begin() {
     _server.onClient([this](void* arg, AsyncClient* client) 
     {
         Serial.print("New client connected: ");
@@ -120,12 +120,12 @@ void AsyncTCPServer::begin() {
     Serial.printf("TCP Server gestartet auf Port %d\n", _port);
 }
 
-size_t AsyncTCPServer::getClientCount() const 
+size_t ota::AsyncTCPServer::getClientCount() const 
 {
     return _clients.size();
 }
 
-bool AsyncTCPServer::sendToAll(const char* data, size_t len) 
+bool ota::AsyncTCPServer::sendToAll(const char* data, size_t len) 
 {
     if (_clients.empty()) {
         Serial.println("Keine Clients verbunden");
@@ -143,12 +143,12 @@ bool AsyncTCPServer::sendToAll(const char* data, size_t len)
     return success;
 }
 
-bool AsyncTCPServer::sendToAll(const char* data) 
+bool ota::AsyncTCPServer::sendToAll(const char* data) 
 {
     return sendToAll(data, strlen(data));
 }
 
-bool AsyncTCPServer::sendStartOptions(const std::map<std::string, std::function<void()>>& options) 
+bool ota::AsyncTCPServer::sendStartOptions(const std::map<std::string, std::function<void()>>& options) 
 {
     if (_clients.empty()) {
         Serial.println("Keine Clients verbunden");
@@ -172,7 +172,7 @@ bool AsyncTCPServer::sendStartOptions(const std::map<std::string, std::function<
     return sendToAll(_jsonBufferFunctions, len);
 }
 
-bool AsyncTCPServer::sendChangeableVariables(const std::map<std::string, std::reference_wrapper<uint32_t>>& variables)
+bool ota::AsyncTCPServer::sendChangeableVariables(const std::map<std::string, std::reference_wrapper<uint32_t>>& variables)
 {
     if (_clients.empty()) {
         Serial.println("Keine Clients verbunden");
@@ -198,7 +198,7 @@ bool AsyncTCPServer::sendChangeableVariables(const std::map<std::string, std::re
     return sendToAll(_jsonBufferVariables, len);
 }
 
-void AsyncTCPServer::onClientConnect(ClientConnectCallback cb) 
+void ota::AsyncTCPServer::onClientConnect(ClientConnectCallback cb) 
 {
     if (cb) {
         _onClientConnect = cb;
@@ -209,7 +209,7 @@ void AsyncTCPServer::onClientConnect(ClientConnectCallback cb)
     }
 }
 
-void AsyncTCPServer::onClientDisconnect(ClientDisconnectCallback cb) 
+void ota::AsyncTCPServer::onClientDisconnect(ClientDisconnectCallback cb) 
 {
     if (cb) {
         _onClientDisconnect = cb;
@@ -220,7 +220,7 @@ void AsyncTCPServer::onClientDisconnect(ClientDisconnectCallback cb)
     }
 }
 
-void AsyncTCPServer::onData(DataCallback cb)
+void ota::AsyncTCPServer::onData(DataCallback cb)
 {
     if (cb) {
         _onData = cb;
@@ -231,12 +231,12 @@ void AsyncTCPServer::onData(DataCallback cb)
     }
 }
 
-void AsyncTCPServer::setStartOptions(std::map<std::string, std::function<void()>> startOptions) 
+void ota::AsyncTCPServer::setStartOptions(std::map<std::string, std::function<void()>> startOptions) 
 {
     this->startOptions = startOptions;
 }
 
-void AsyncTCPServer::setChangeableVariables(std::map<std::string, uint32_t&> vars) 
+void ota::AsyncTCPServer::setChangeableVariables(std::map<std::string, uint32_t&> vars) 
 {
     // Clear the current map
     this->changeableVariables.clear();
@@ -250,12 +250,12 @@ void AsyncTCPServer::setChangeableVariables(std::map<std::string, uint32_t&> var
     }
 }
 
-void AsyncTCPServer::addStartOption(std::string name, std::function<void()> function) 
+void ota::AsyncTCPServer::addStartOption(std::string name, std::function<void()> function) 
 {
     startOptions[name] = function;
 }
 
-void AsyncTCPServer::addChangeableVariable(std::string name, uint32_t& variable) 
+void ota::AsyncTCPServer::addChangeableVariable(std::string name, uint32_t& variable) 
 {
     // Again, use insert() instead of operator[]
     changeableVariables.insert(
@@ -263,17 +263,17 @@ void AsyncTCPServer::addChangeableVariable(std::string name, uint32_t& variable)
     );
 }
 
-bool AsyncTCPServer::sendStartOptions()
+bool ota::AsyncTCPServer::sendStartOptions()
 {
     return sendStartOptions(startOptions);
 }
 
-bool AsyncTCPServer::sendChangeableVariables()
+bool ota::AsyncTCPServer::sendChangeableVariables()
 {
     return sendChangeableVariables(changeableVariables);
 }
 
-void AsyncTCPServer::onConnectInternal(AsyncClient* client) 
+void ota::AsyncTCPServer::onConnectInternal(AsyncClient* client) 
 {
     Serial.print("Client verbunden von IP: ");
     Serial.println(client->remoteIP().toString());
@@ -283,13 +283,13 @@ void AsyncTCPServer::onConnectInternal(AsyncClient* client)
     sendChangeableVariables();
 }
 
-void AsyncTCPServer::onDisconnectInternal(AsyncClient* client) 
+void ota::AsyncTCPServer::onDisconnectInternal(AsyncClient* client) 
 {
     Serial.print("Client getrennt von IP: ");
     Serial.println(client->remoteIP().toString());
 }
 
-void AsyncTCPServer::onDataInternal(AsyncClient* client, void* data, size_t len) 
+void ota::AsyncTCPServer::onDataInternal(AsyncClient* client, void* data, size_t len) 
 {
     // Puffer für die eingehenden Daten mit Nullterminierung
     char* str = new char[len + 1];
@@ -384,7 +384,7 @@ void AsyncTCPServer::onDataInternal(AsyncClient* client, void* data, size_t len)
     delete[] str;
 }
 
-bool AsyncTCPServer::getSelectedStartOption(std::function<void()>& option) 
+bool ota::AsyncTCPServer::getSelectedStartOption(std::function<void()>& option) 
 {
     bool success = false;
     

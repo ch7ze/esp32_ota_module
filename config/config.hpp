@@ -29,6 +29,11 @@ using std::endl;
 #include <sstream>
 #include <ArduinoJson.h>
 
+namespace ota
+{
+
+
+
 // Template-Klasse für Variableninfo mit einheitlichem JSON-Format
 template<typename T>
 class VarInfo {
@@ -262,3 +267,4 @@ protected:
     }
 }; 
 inline SerialStreambuf serial_streambuf;*/
+}

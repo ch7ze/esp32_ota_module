@@ -6,7 +6,10 @@
 #include <ArduinoOTA.h>
 #include <ESPmDNS.h>
 
+namespace ota
+{
+	void setupOTA();
 
-void setupOTA();
+	void startAutomaticOTA();
+}
 
-void startAutomaticOTA();
