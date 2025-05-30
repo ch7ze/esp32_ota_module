@@ -97,13 +97,7 @@ VarInfo<T> makeVarInfo(const std::string& name, const T& value) {
 // Makro für die einfache Verwendung
 #define vInfo(var) makeVarInfo(#var, var)
 
-template<typename T>
-VarInfo<T> makeNamedVarInfo(const std::string& name, const T& value) {
-    return VarInfo<T>(name, value);
-}
 
-// Zusätzliches Makro für benannte Variablen
-#define vInfoNamed(name, value) makeNamedVarInfo(name, value)
 
 
 
