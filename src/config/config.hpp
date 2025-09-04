@@ -10,12 +10,14 @@
 #include <functional>
 #include <atomic>
 
-static constexpr char *ssid = "Raspberry";
-static constexpr char *password = "55555555";
+// static constexpr char *ssid = "Raspberry";
+// static constexpr char *password = "55555555";
 
 
-inline IPAddress udpTargetIP(192, 168, 43, 23); // IP-Adresse des Zielcomputers (dein PC)
-inline const int udpPort = 60000;
+// inline IPAddress udpTargetIP(192, 168, 43, 23); // IP-Adresse des Zielcomputers (dein PC)
+// inline const int udpPort = 60000;
+
+
 #define HOSTNAME "test"
 
 using std::cout;
