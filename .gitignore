@@ -1,0 +1,31 @@
+# IDE Folders
+.vscode/
+.claude/
+
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Arduino IDE
+*.fqbn
+*.workspace
+
+# Build artifacts
+*.bin
+*.elf
+*.map
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
