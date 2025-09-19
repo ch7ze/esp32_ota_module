@@ -6,7 +6,7 @@ const char* ESP32_OTA_SSID = "YourWiFiName";
 const char* ESP32_OTA_PASSWORD = "YourWiFiPassword"; 
 
 // UDP Configuration for remote logging
-IPAddress ESP32_OTA_UDP_TARGET_IP(192, 168, 1, 100); // Your PC's IP address
+IPAddress ESP32_OTA_UDP_TARGET_IP(192, 168, 137, 1); // Your PC's IP address
 const int ESP32_OTA_UDP_PORT = 60000;
 
 // Hostname for OTA
@@ -37,7 +37,7 @@ void setup() {
     
     // Start TCP server for remote access
     ota::tcpServer.begin();
-    Serial.println("TCP Server started on port 50000");
+    Serial.println("TCP Server started on port 3232");
     
     // Add some example start options
     ota::tcpServer.addStartOption("test_function", []() {
@@ -51,7 +51,7 @@ void setup() {
     
     Serial.println("Setup completed. You can now:");
     Serial.println("1. Use Arduino IDE OTA to upload new sketches");
-    Serial.println("2. Connect to TCP port 50000 for remote control");
+    Serial.println("2. Connect to TCP port 3232 for remote control");
     Serial.println("3. Send JSON commands like: {\"startOption\":\"test_function\"}");
 }
 

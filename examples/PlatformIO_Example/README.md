@@ -43,12 +43,12 @@ This example demonstrates advanced usage of the ESP32 OTA Module with PlatformIO
 ## Remote Control Usage
 
 ### Connect to TCP Server
-The ESP32 starts a TCP server on port 50000. Connect using telnet, netcat, or a custom client:
+The ESP32 starts a TCP server on port 3232. Connect using telnet, netcat, or a custom client:
 
 ```bash
-telnet ESP32_IP_ADDRESS 50000
+telnet ESP32_IP_ADDRESS 3232
 # or
-nc ESP32_IP_ADDRESS 50000
+nc ESP32_IP_ADDRESS 3232
 ```
 
 ### Available Commands
@@ -105,7 +105,7 @@ ESP32 OTA Module - Advanced PlatformIO Example
 Connecting to WiFi.....
 Connected! IP address: 192.168.1.150
 Automatic OTA started
-TCP Server started on port 50000
+TCP Server started on port 3232
 Setup completed!
 Available remote commands:
 - Start functions: read_sensors, calibrate, restart, factory_reset
@@ -127,7 +127,7 @@ Available remote commands:
 ### TCP Connection Issues
 - Verify ESP32 IP address from Serial Monitor
 - Check firewall settings on your computer
-- Ensure port 50000 is not blocked
+- Ensure port 3232 is not blocked
 
 ## Extension Ideas
 

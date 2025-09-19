@@ -99,7 +99,7 @@ Starts OTA handling in a separate FreeRTOS task (recommended).
 Global AsyncTCPServer instance for remote communication.
 
 #### `tcpServer.begin()`
-Starts TCP server on port 50000.
+Starts TCP server on port 3232.
 
 #### `tcpServer.addStartOption(name, function)`
 Adds a remotely callable function.
@@ -145,9 +145,9 @@ std::cout << vInfo(sensor) << std::endl;
 ## Remote Control Protocol
 
 ### Connection
-Connect to ESP32 on TCP port 50000:
+Connect to ESP32 on TCP port 3232:
 ```bash
-telnet ESP32_IP_ADDRESS 50000
+telnet ESP32_IP_ADDRESS 3232
 ```
 
 ### Commands
@@ -218,7 +218,7 @@ const char* ESP32_OTA_HOSTNAME;       // OTA hostname
 ### TCP Connection Issues  
 - Confirm ESP32 IP address from Serial Monitor
 - Test with telnet or netcat first
-- Check port 50000 availability
+- Check port 3232 availability
 
 ### Compilation Errors
 - Verify all dependencies are installed

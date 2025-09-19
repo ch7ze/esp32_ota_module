@@ -18,11 +18,14 @@ namespace ota
 
     inline AsyncUDP asyncUdp;
 
+    
+
 
 
     inline void udpOut(const char* data, size_t len)
     {
         asyncUdp.writeTo((const uint8_t*) data, len, udpTargetIP, udpPort);
+        Serial.println("udp out");
     }
     
     inline void serialOut(const char* data, size_t len)
@@ -58,7 +61,7 @@ namespace ota
             bool validStartOption = false;
     
         public:
-            AsyncTCPServer(uint16_t port = 50000);
+            AsyncTCPServer(uint16_t port = 3232);
             void begin();
             size_t getClientCount() const;
             bool sendToAll(const char* data, size_t len);

@@ -1,13 +1,16 @@
 #include <ESP32_OTA_Module.h>
 #include <WiFi.h>
+#include <esp32_configurable_streambuf.h>
 
 // WiFi Configuration - Change these values
-const char* ESP32_OTA_SSID = "YourWiFiName";
-const char* ESP32_OTA_PASSWORD = "YourWiFiPassword"; 
+const char* ESP32_OTA_SSID = "Raspberry";
+const char* ESP32_OTA_PASSWORD = "55555555";
 
 // UDP Configuration for remote logging
-IPAddress ESP32_OTA_UDP_TARGET_IP(192, 168, 1, 100); // Your PC's IP address
-const int ESP32_OTA_UDP_PORT = 60000;
+IPAddress ESP32_OTA_UDP_TARGET_IP(192, 168, 137, 1); // Your PC's IP address
+const int ESP32_OTA_UDP_PORT = 3232;
+
+
 
 // Hostname for OTA
 const char* ESP32_OTA_HOSTNAME = "esp32-ota-advanced";
@@ -60,6 +63,12 @@ void setup() {
     delay(1000);
     
     pinMode(LED_BUILTIN, OUTPUT);
+
+    neopixelWrite(LED_BUILTIN, 255, 0, 0); // Red during setup
+    
+    // Configure cout to use configurable streambuf for Serial and UDP output
+    cs::configurableStreambuf.addOutputFunction(cs::serialOut);
+    std::cout.rdbuf(&cs::configurableStreambuf);
     
     std::cout << "ESP32 OTA Module - Advanced PlatformIO Example" << std::endl;
     
@@ -71,16 +80,22 @@ void setup() {
         delay(500);
         std::cout << ".";
     }
+
+    neopixelWrite(LED_BUILTIN, 0, 255, 0); // Green on successful connection
     
     std::cout << std::endl << "Connected! IP address: " << WiFi.localIP().toString().c_str() << std::endl;
     
+
     // Setup OTA with automatic handling in background task
     ota::startAutomaticOTA();
     std::cout << "Automatic OTA started" << std::endl;
     
     // Start TCP server
     ota::tcpServer.begin();
-    std::cout << "TCP Server started on port 50000" << std::endl;
+    std::cout << "TCP Server started on port 3232" << std::endl;
+
+    cs::configurableStreambuf.addOutputFunction(ota::udpOut);
+    std::cout << "UDP output configured for " << ESP32_OTA_UDP_TARGET_IP.toString().c_str() << ":" << ESP32_OTA_UDP_PORT << std::endl;
     
     // Configure start options for remote control
     ota::tcpServer.addStartOption("read_sensors", readSensors);

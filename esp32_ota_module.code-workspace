@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"name": "PlatformIO Example",
+			"path": "./examples/PlatformIO_Example"
+		},
+		{
+			"name": "Root",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.h": "cpp",
+			"*.hpp": "cpp",
+			"*.cpp": "cpp",
+			"*.ino": "cpp",
+			"sstream": "cpp",
+			"string": "cpp",
+			"iostream": "cpp",
+			"atomic": "cpp"
+		},
+		"C_Cpp.default.compilerPath": "~/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc.exe",
+		"C_Cpp.default.cStandard": "c11",
+		"C_Cpp.default.cppStandard": "c++17",
+		"C_Cpp.errorSquiggles": "Enabled"
+	},
+	"extensions": {
+		"recommendations": [
+			"platformio.platformio-ide",
+			"ms-vscode.cpptools",
+			"ms-vscode.cpptools-extension-pack"
+		]
+	}
+}

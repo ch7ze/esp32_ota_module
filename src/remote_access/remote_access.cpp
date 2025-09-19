@@ -12,7 +12,7 @@
  ******************************************************************************************/
 
 
- ota::AsyncTCPServer::AsyncTCPServer(uint16_t port) : _server(port), _port(port) 
+ ota::AsyncTCPServer::AsyncTCPServer(uint16_t port) : _server(port), _port(port)
 {
     // Initialize mutex
     selectedStartOptionMutex = xSemaphoreCreateMutex();
@@ -318,8 +318,8 @@ void ota::AsyncTCPServer::onDataInternal(AsyncClient* client, void* data, size_t
             std::cout << "restart esp" << std::endl;
             ESP.restart();
         }
-    } 
-    else 
+    }
+    else
     {
         // Kein gültiges JSON, versuche als direkten Funktionsnamen zu interpretieren
         for (const auto& option : startOptions) {
@@ -352,6 +352,6 @@ bool ota::AsyncTCPServer::getSelectedStartOption(std::function<void()>& option)
         }
         xSemaphoreGive(selectedStartOptionMutex);
     }
-    
+
     return success;
 }
