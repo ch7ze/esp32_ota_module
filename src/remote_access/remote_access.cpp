@@ -258,6 +258,8 @@ void ota::AsyncTCPServer::onDataInternal(AsyncClient* client, void* data, size_t
         // JSON erfolgreich geparst
         if (doc.containsKey("startOption")) 
         {
+            neopixelWrite(LED_BUILTIN, 255, 255, 0); // Gelbes Blinken zur Anzeige einer Startoption
+            delay(50);
             const char* funcName = doc["startOption"];
             std::clog << "selected startoption: " << funcName << std::endl;
         
@@ -283,6 +285,9 @@ void ota::AsyncTCPServer::onDataInternal(AsyncClient* client, void* data, size_t
         
         else if (doc.containsKey("setVariable")) 
         {
+
+            neopixelWrite(LED_BUILTIN, 0, 0, 255); // Blaues Blinken zur Anzeige einer Variablenänderung
+            delay(50);
             const char* varName = doc["setVariable"]["name"];
             
             // Versuche verschiedene Methoden zur Extraktion des Werts
