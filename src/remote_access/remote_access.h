@@ -24,7 +24,7 @@ namespace ota
 
     inline void udpOut(const char* data, size_t len)
     {
-        asyncUdp.writeTo((const uint8_t*) data, len, udpTargetIP, udpPort);
+        asyncUdp.writeTo((const uint8_t*) data, len, ota_config.targetIP, udpPort);
         Serial.println("udp out");
     }
     

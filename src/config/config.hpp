@@ -10,12 +10,20 @@
 #include <functional>
 #include <atomic>
 
- static constexpr char *ssid = "Raspberry";
- static constexpr char *password = "55555555";
+
+namespace ota
+{
+    struct initial_config
+    {
+        std::string ssid;
+        std::string password;
+        IPAddress targetIP;
+    };
 
 
- inline IPAddress udpTargetIP(192, 168, 137, 1); // IP-Adresse des Zielcomputers (dein PC)
- inline const int udpPort = 60000;
+    void setInitialConfig(initial_config config);
+}
+
 
 
 #define HOSTNAME "test"
@@ -33,7 +41,9 @@ using std::endl;
 
 namespace ota
 {
+    constexpr uint16_t udpPort = 3232; // Port für UDP-Ausgabe
 
+    inline initial_config ota_config;
 
 
 // Template-Klasse für Variableninfo mit einheitlichem JSON-Format

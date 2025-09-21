@@ -5,3 +5,7 @@
 
 
 
+void ota::setInitialConfig(initial_config config)
+{
+	ota_config = config;
+}
